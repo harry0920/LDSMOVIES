@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using MVCLdsMovies.Models;
 
 namespace MVCLdsMovies
 {
@@ -22,6 +24,9 @@ namespace MVCLdsMovies
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            services.AddDbContext<MVCLdsMoviesContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("MVCLdsMoviesContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +50,7 @@ namespace MVCLdsMovies
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+           // SeedData.Initialize(app.ApplicationServices);
         }
     }
 }
